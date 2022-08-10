@@ -1,0 +1,84 @@
+// Have also encorporated VENDING MACHINE BUTTONS to add specific units of Milk & Sugar according to custom taste.
+
+class CoffeeVendor {
+
+    public Coffee prepareCoffee(CoffeeRecipe recipe) {
+        Coffee coffee = new PlainCoffee();
+
+        for (int i = 0; i < recipe.getMilkUnits(); i++) {
+            coffee = new WithMilk(coffee);
+        }
+
+        for (int i = 0; i < recipe.getSugarUnits(); i++) {
+            coffee = new WithSugar(coffee);
+        }
+
+        return coffee;
+    }
+}
+
+class CoffeeRecipe {
+    private int milkUnits;
+    private int sugarUnits;
+
+    public CoffeeRecipe(int milkUnits, int sugarUnits) {
+        this.milkUnits = milkUnits;
+        this.sugarUnits = sugarUnits;
+    }
+
+    public int getMilkUnits() {
+        return milkUnits;
+    }
+
+    public int getSugarUnits() {
+        return sugarUnits;
+    }
+}
+
+interface Coffee {
+    public String getIngredients();
+}
+
+class PlainCoffee implements Coffee {
+
+    @Override
+    public String getIngredients() {
+        // TODO Auto-generated method stub
+        return "Plain Coffee";
+    }
+
+}
+
+abstract class CoffeeCustomizer implements Coffee {
+    protected final Coffee decoratedCoffee;
+
+    public CoffeeCustomizer(Coffee coffee) {
+        this.customizedCoffee = coffee;
+    }
+
+    public String getIngredients() {
+        return customizedCoffee.getIngredients();
+    }
+}
+
+class WithMilk extends CoffeeCustomizer {
+
+    public WithMilk(Coffee coffee) {
+        super(coffee);
+    }
+
+    public String getIngredients() {
+        return super.getIngredients() + ", Milk";
+    }
+}
+
+class WithSugar extends CoffeeCustomizer {
+
+    public WithSugar(Coffee coffee) {
+        super(coffee);
+    }
+
+    public String getIngredients() {
+        return super.getIngredients() + ", Sugar";
+    }
+}
